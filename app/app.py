@@ -13,13 +13,13 @@ st.set_page_config(
 # --- Funções de Carregamento ---
 @st.cache_data
 def carregar_artefatos():
-    # Caminho para os arquivos na pasta models
-    path_df_completo = '../models/df_final.parquet'
-    path_df_candidatos = '../models/df_candidatos.parquet'
-    path_vectorizer = '../models/vectorizer.pkl'
-    path_matriz_cvs = '../models/matriz_cvs.pkl'
+    # Caminhos relativos à raiz do projeto (sem ../)
+    path_df_completo = 'models/df_final.parquet'
+    path_df_candidatos = 'models/df_candidatos.parquet'
+    path_vectorizer = 'models/vectorizer.pkl'
+    path_matriz_cvs = 'models/matriz_cvs.pkl'
 
-    # Carrega os DataFrames no formato .parquet
+    # Carrega os DataFrames
     df_completo = pd.read_parquet(path_df_completo)
     df_candidatos = pd.read_parquet(path_df_candidatos)
     
@@ -86,3 +86,4 @@ if vaga_selecionada:
     colunas_para_exibir = ['Candidato(a)', 'Pontuação de Match', 'Nível do Candidato', 'Status Conhecido']
 
     st.table(df_ranking_display[colunas_para_exibir].head(10).reset_index(drop=True))
+
