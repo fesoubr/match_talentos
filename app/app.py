@@ -12,14 +12,21 @@ st.set_page_config(
 
 # --- Funções de Carregamento ---
 @st.cache_data
-    # Carrega os DataFrames no novo formato .parquet
-    df_completo = pd.read_parquet('../models/df_final.parquet')
-    df_candidatos = pd.read_parquet('../models/df_candidatos.parquet')
+def carregar_artefatos():
+    # Caminho para os arquivos na pasta models
+    path_df_completo = '../models/df_final.parquet'
+    path_df_candidatos = '../models/df_candidatos.parquet'
+    path_vectorizer = '../models/vectorizer.pkl'
+    path_matriz_cvs = '../models/matriz_cvs.pkl'
+
+    # Carrega os DataFrames no formato .parquet
+    df_completo = pd.read_parquet(path_df_completo)
+    df_candidatos = pd.read_parquet(path_df_candidatos)
     
-    # Carrega os modelos .pkl normalmente
-    with open('../models/vectorizer.pkl', 'rb') as f:
+    # Carrega os modelos .pkl
+    with open(path_vectorizer, 'rb') as f:
         vectorizer = pickle.load(f)
-    with open('../models/matriz_cvs.pkl', 'rb') as f:
+    with open(path_matriz_cvs, 'rb') as f:
         matriz_cvs = pickle.load(f)
     
     return df_completo, df_candidatos, vectorizer, matriz_cvs
@@ -77,4 +84,5 @@ if vaga_selecionada:
 
     # 7. Define as colunas a serem exibidas e mostra a tabela
     colunas_para_exibir = ['Candidato(a)', 'Pontuação de Match', 'Nível do Candidato', 'Status Conhecido']
+
     st.table(df_ranking_display[colunas_para_exibir].head(10).reset_index(drop=True))
